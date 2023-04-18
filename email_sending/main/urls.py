@@ -3,5 +3,6 @@ from . import views
 
 urlpatterns = [
     path('', views.registration_view, name='registration'),
-    path('varify/<str:username>/<str:token>/', views.varify, name='varify'),
+    path('varified_and_login/<str:username>/<str:token>/',
+         views.login_view, name='login'),
 ]

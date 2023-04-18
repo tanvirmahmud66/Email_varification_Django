@@ -1,5 +1,10 @@
 {%extends 'base.html'%}
-{%block title%} Registration Page{%endblock title%}
+{%block title%} We have send varification mail {%endblock title%}
 {%block content%}
-    <h1>Login Page</h1>
+{% if messages%}
+{%for message in messages%}
+    <h4>{{message}}</h4>
+{%endfor%}
+{%endif%}
+<h2>Login page</h2>
 {%endblock content%}

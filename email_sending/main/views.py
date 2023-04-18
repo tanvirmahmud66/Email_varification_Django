@@ -5,6 +5,7 @@ from django.contrib.auth.models import User
 from django.contrib.sites.shortcuts import get_current_site
 from .models import Profile
 from django.conf import settings
+from django.contrib import messages
 # Create your views here.
 
 
@@ -18,7 +19,7 @@ def registration_view(request):
         user.save()
         domain_name = get_current_site(request).domain
         token = str(uuid.uuid4())
-        link = f"http//{domain_name}/varify/{username}/{token}"
+        link = f"http//{domain_name}/varified_and_login/{username}/{token}"
 
         subject = "Email Varification"
         message = f"Please click this link {link} to varify your Registration process"
@@ -31,16 +32,16 @@ def registration_view(request):
             recipient_list,
             fail_silently=False
         )
-        return render(request, 'varify.html')
+        return render(request, 'login.html')
     return render(request, 'registration.html')
 
 
-def varify(request, username, token):
+def login_view(request, username, token):
     user_model = User.objects.get(username=username)
     new_profile = Profile.objects.create(
         user=user_model,
         token=token,
         is_varified=True)
     new_profile.save()
-    print("your email is varified")
+    messages.info(request, 'Your email is verified please Login Again')
     return render(request, 'login.html')
